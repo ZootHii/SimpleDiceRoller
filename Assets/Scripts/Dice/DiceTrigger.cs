@@ -12,33 +12,85 @@ public class DiceTrigger : MonoBehaviour
         {
             diceVelocity = Dice.instance.diceVelocity;
         }
+        Result.dice1Result = "";
+        Result.dice2Result = "";
     }
 
     void OnTriggerStay(Collider col)
     {
-        if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
+
+        if (GameManager.instance.diceNumber == 1)
         {
-            switch (col.gameObject.name)
+            if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
             {
-                case "Side1":
-                    DiceNumber.diceNumber = 6;
-                    break;
-                case "Side2":
-                    DiceNumber.diceNumber = 4;
-                    break;
-                case "Side3":
-                    DiceNumber.diceNumber = 5;
-                    break;
-                case "Side4":
-                    DiceNumber.diceNumber = 2;
-                    break;
-                case "Side5":
-                    DiceNumber.diceNumber = 3;
-                    break;
-                case "Side6":
-                    DiceNumber.diceNumber = 1;
-                    break;
+                switch (col.gameObject.name)
+                {
+                    case "Dice1Side1":
+                        Result.dice1Result = "6";
+                        break;
+                    case "Dice1Side2":
+                        Result.dice1Result = "4";
+                        break;
+                    case "Dice1Side3":
+                        Result.dice1Result = "5";
+                        break;
+                    case "Dice1Side4":
+                        Result.dice1Result = "2";
+                        break;
+                    case "Dice1Side5":
+                        Result.dice1Result = "3";
+                        break;
+                    case "Dice1Side6":
+                        Result.dice1Result = "1";
+                        break;
+                }
             }
         }
+        else if (GameManager.instance.diceNumber == 2)
+        {
+            if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
+            {
+                switch (col.gameObject.name)
+                {
+                    case "Dice1Side1":
+                        Result.dice1Result = "6";
+                        break;
+                    case "Dice1Side2":
+                        Result.dice1Result = "4";
+                        break;
+                    case "Dice1Side3":
+                        Result.dice1Result = "5";
+                        break;
+                    case "Dice1Side4":
+                        Result.dice1Result = "2";
+                        break;
+                    case "Dice1Side5":
+                        Result.dice1Result = "3";
+                        break;
+                    case "Dice1Side6":
+                        Result.dice1Result = "1";
+                        break;
+                    case "Dice2Side1":
+                        Result.dice2Result = "6";
+                        break;
+                    case "Dice2Side2":
+                        Result.dice2Result = "4";
+                        break;
+                    case "Dice2Side3":
+                        Result.dice2Result = "5";
+                        break;
+                    case "Dice2Side4":
+                        Result.dice2Result = "2";
+                        break;
+                    case "Dice2Side5":
+                        Result.dice2Result = "3";
+                        break;
+                    case "Dice2Side6":
+                        Result.dice2Result = "1";
+                        break;
+                }
+            }
+        }
+
     }
 }
