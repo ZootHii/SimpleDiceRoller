@@ -4,10 +4,14 @@ public class DiceTrigger : MonoBehaviour
 {
 
     Vector3 diceVelocity;
+    private int videoAdTriggerFor1Dice = 15;
+    private int videoAdTriggerFor2Dice = 30;
+    private int videoAdTriggerCount = 0;
 
     // Update is called once per frame
     void FixedUpdate()
     {
+
         if (Dice.instance.diceVelocity != null)
         {
             diceVelocity = Dice.instance.diceVelocity;
@@ -16,14 +20,15 @@ public class DiceTrigger : MonoBehaviour
         Result.dice2Result = "";
     }
 
-    void OnTriggerStay(Collider col)
+    void OnTriggerStay(Collider collider)
     {
 
         if (GameManager.instance.diceNumber == 1)
         {
             if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
             {
-                switch (col.gameObject.name)
+
+                switch (collider.gameObject.name)
                 {
                     case "Dice1Side1":
                         Result.dice1Result = "6";
@@ -50,7 +55,7 @@ public class DiceTrigger : MonoBehaviour
         {
             if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
             {
-                switch (col.gameObject.name)
+                switch (collider.gameObject.name)
                 {
                     case "Dice1Side1":
                         Result.dice1Result = "6";
@@ -93,4 +98,40 @@ public class DiceTrigger : MonoBehaviour
         }
 
     }
+
+    void OnTriggerExit(Collider collider)
+    {
+        if (GameManager.instance.diceNumber == 1)
+        {
+            if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
+            {
+                if (videoAdTriggerCount == videoAdTriggerFor1Dice)
+                {
+                    videoAdTriggerCount = 0;
+                    GameManager.instance.isVideoAdActive = true;
+                    AdManager.instance.HideBannerAd();
+                    AdManager.instance.ShowVideoAd();
+                }
+                //Debug.Log("x" + videoAdTriggerCount);
+                videoAdTriggerCount++;
+            }
+        }
+        else if(GameManager.instance.diceNumber == 2)
+        {
+            if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
+            {
+                if (videoAdTriggerCount == videoAdTriggerFor2Dice)
+                {
+                    videoAdTriggerCount = 0;
+                    GameManager.instance.isVideoAdActive = true;
+                    AdManager.instance.HideBannerAd();
+                    AdManager.instance.ShowVideoAd();
+                }
+                //Debug.Log("x" + videoAdTriggerCount);
+                videoAdTriggerCount++;
+            }
+        }
+            
+    }
+
 }

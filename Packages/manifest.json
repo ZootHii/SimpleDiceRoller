@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.unity.localization": "0.8.1-preview",
     "com.google.external-dependency-manager": "1.2.160",
     "com.unity.ads": "3.4.9",
     "com.unity.collab-proxy": "1.2.16",

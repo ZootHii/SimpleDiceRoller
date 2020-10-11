@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
@@ -6,8 +9,14 @@ public class Dice : MonoBehaviour
     public Rigidbody rb;
     public Vector3 diceVelocity;
     public static Dice instance;
-    bool setpos = false;
-    bool holding = false;
+    public int count = 0;
+    private bool setpos = false;
+    private bool holding = false;
+    private float touchableArea = Screen.height / 2 * 1.7f;
+
+
+    private float timeRemainingVideo = 40;
+
 
     private void Awake()
     {
@@ -15,15 +24,20 @@ public class Dice : MonoBehaviour
 
     }
 
-    // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+
+
+        /*if (Input.GetMouseButtonDown(0))
+        {
+            UnityEngine.Debug.Log(Input.mousePosition);
+            UnityEngine.Debug.Log(Screen.height / 2 * 1.76f);
+        }*/
 
         if (diceVelocity != null)
         {
@@ -34,25 +48,44 @@ public class Dice : MonoBehaviour
         var fingerCount = 0;
         foreach (var touch in Input.touches)
         {
-            if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
+
+            if (touch.position.y < touchableArea)
             {
-                fingerCount++;
-                holding = false;
-            }
+
+                if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
+                {
+                    fingerCount++;
+                    holding = false;
+                }
 
 
-            if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
-            {
-                holding = true;
+                if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
+                {
+                    holding = true;
+                    if (timeRemainingVideo > 0)
+                    {
+                        timeRemainingVideo -= Time.deltaTime;
+                        UnityEngine.Debug.Log("time : "+ timeRemainingVideo);
+                    }
+                    else
+                    {
+                        //Debug.Log("Show Video Ad");
+                        AdManager.instance.ShowVideoAd();
+                        AdManager.instance.HideBannerAd();
+                        GameManager.instance.isVideoAdActive = true;
+                        timeRemainingVideo = 30;
+                    }  
+                }
             }
+
         }
 
         if (Input.GetKeyDown(KeyCode.Space) || (fingerCount > 0 && !holding))
         {
 
-            Debug.Log("AHMET");
-            Debug.Log(GameManager.instance.diceNumber);
-            //Result.diceResult = 0;
+            //UnityEngine.Debug.Log("AHMET");
+            //UnityEngine.Debug.Log(GameManager.instance.diceNumber);
+
             float dirX = Random.Range(10000, 500000);
             float dirY = Random.Range(10000, 500000);
             float dirZ = Random.Range(10000, 500000);
@@ -70,11 +103,8 @@ public class Dice : MonoBehaviour
             rb.AddTorque(dirX, dirY, dirZ);
 
         }
-
-        if (Input.GetKey(KeyCode.Space) || (fingerCount > 0 && holding))
+        else if (Input.GetKey(KeyCode.Space) || (fingerCount > 0 && holding))
         {
-
-
             if (!setpos)
             {
                 float posX = Random.Range(-2, 2);
@@ -91,10 +121,8 @@ public class Dice : MonoBehaviour
             }
 
             rb.AddForce(Physics.gravity, ForceMode.Acceleration);
-
         }
-
-
-
     }
+
+    
 }

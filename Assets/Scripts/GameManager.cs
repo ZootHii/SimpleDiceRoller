@@ -5,11 +5,11 @@ public class GameManager : MonoBehaviour
     public int diceNumber = 1;
     public GameObject dice2;
     public static GameManager instance;
-    private static int videoAdTrigger = 6;
-    private static int videoAdTriggerCount = 0;
+    private int videoAdTrigger = 6;
+    private int videoAdTriggerCount = 0;
     private float timeRemainingVideo = 300;
     private float timeRemainingBanner = 5;
-    private bool isVideoAdActive = false;
+    public bool isVideoAdActive = false;
 
 
     private void Awake()
@@ -19,9 +19,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        /*if (isVideoAdActive)
+        if (isVideoAdActive)
         {
-            AdManager.HideBannerAd();
+            AdManager.instance.HideBannerAd();
             timeRemainingBanner -= Time.deltaTime;
 
             if (timeRemainingBanner > 0)
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         }
         else if (!isVideoAdActive)
         {
-            AdManager.ShowBannerAd();
+            AdManager.instance.ShowBannerAd();
         }
 
         if (timeRemainingVideo > 0)
@@ -41,29 +41,28 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Show Video Ad");
-            AdManager.ShowVideoAd();
-            AdManager.HideBannerAd();
+            //Debug.Log("Show Video Ad");
+            AdManager.instance.ShowVideoAd();
+            AdManager.instance.HideBannerAd();
             isVideoAdActive = true;
             timeRemainingVideo = 300;
-        }*/
+        }
 
     }
 
     public void set2Dice()
     {
-        
-        /*AdManager.HideBannerAd();*/
+       
 
-        Debug.Log(videoAdTrigger);
-        Debug.Log(videoAdTriggerCount);
+        //Debug.Log(videoAdTrigger);
+        //Debug.Log(videoAdTriggerCount);
        
         if (videoAdTriggerCount == videoAdTrigger)
         {
             videoAdTriggerCount = 0;
             isVideoAdActive = true;
             AdManager.instance.ShowVideoAd();
-            /*AdManager.HideBannerAd();*/
+            AdManager.instance.HideBannerAd();
         }
 
         videoAdTriggerCount++;
