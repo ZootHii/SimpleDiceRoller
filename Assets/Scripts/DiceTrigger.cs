@@ -2,17 +2,12 @@
 
 public class DiceTrigger : MonoBehaviour
 {
-    Vector3 diceVelocity;
     private int videoAdTriggerFor1Dice = 15;
     private int videoAdTriggerFor2Dice = 30;
     private int videoAdTriggerCount = 0;
 
     void FixedUpdate()
     {
-        if (Dice.instance.diceVelocity != null)
-        {
-            diceVelocity = Dice.instance.diceVelocity;
-        }
 
         Result.dice1Result = "";
         Result.dice2Result = "";
@@ -22,7 +17,7 @@ public class DiceTrigger : MonoBehaviour
     {
         if (GameManager.instance.diceNumber == 1)
         {
-            if (diceVelocity == Vector3.zero)
+            if (Dice.instance.diceRigidBody.velocity == Vector3.zero)
             {
                 switch (collider.gameObject.name)
                 {
@@ -52,7 +47,7 @@ public class DiceTrigger : MonoBehaviour
         }
         else if (GameManager.instance.diceNumber == 2)
         {
-            if (diceVelocity == Vector3.zero)
+            if (Dice.instance.diceRigidBody.velocity == Vector3.zero)
             {
                 switch (collider.gameObject.name)
                 {
@@ -105,7 +100,7 @@ public class DiceTrigger : MonoBehaviour
     {
         if (GameManager.instance.diceNumber == 1)
         {
-            if (diceVelocity == Vector3.zero)
+            if (Dice.instance.diceRigidBody.velocity == Vector3.zero)
             {
                 if (videoAdTriggerCount == videoAdTriggerFor1Dice)
                 {
@@ -121,7 +116,7 @@ public class DiceTrigger : MonoBehaviour
 
         else if (GameManager.instance.diceNumber == 2)
         {
-            if (diceVelocity == Vector3.zero)
+            if (Dice.instance.diceRigidBody.velocity == Vector3.zero)
             {
                 if (videoAdTriggerCount == videoAdTriggerFor2Dice)
                 {

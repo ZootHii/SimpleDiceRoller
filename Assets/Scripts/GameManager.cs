@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void set2Dice()
+    public void Set2Dice()
     {
         if (videoAdTriggerCount == videoAdTrigger)
         {

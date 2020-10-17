@@ -5,14 +5,8 @@ using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-
-    public Rigidbody diceRigidBody;
-
-    public Vector3 diceVelocity;
-
-
     public static Dice instance;
-
+    public Rigidbody diceRigidBody;
     private bool isPositionSet = false;
     private bool isHolding = false;
     private readonly float touchableArea = Screen.height / 2 * 1.7f;
@@ -21,13 +15,11 @@ public class Dice : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        diceRigidBody = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-
-        diceVelocity = diceRigidBody.velocity;
-
 
         var fingerCount = 0;
         foreach (var touch in Input.touches)

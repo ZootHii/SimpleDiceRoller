@@ -523,8 +523,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceRigidBody: {fileID: 464683319}
   diceVelocity: {x: 0, y: 0, z: 0}
-  count: 0
-  isStart: 1
 --- !u!65 &464683318
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1521,6 +1519,7 @@ MonoBehaviour:
   diceNumber: 1
   dice2: {fileID: 464683316}
   isVideoAdActive: 0
+  targetFrameRate: 90
 --- !u!4 &1207587169
 Transform:
   m_ObjectHideFlags: 0
@@ -1722,8 +1721,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceRigidBody: {fileID: 1786853154}
   diceVelocity: {x: 0, y: 0, z: 0}
-  count: 0
-  isStart: 1
 --- !u!1 &1841876455
 GameObject:
   m_ObjectHideFlags: 0
@@ -2202,7 +2199,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1207587168}
-        m_MethodName: set2Dice
+        m_MethodName: Set2Dice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
