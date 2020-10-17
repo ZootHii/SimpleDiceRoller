@@ -10,15 +10,19 @@ public class GameManager : MonoBehaviour
     private float timeRemainingVideo = 300;
     private float timeRemainingBanner = 5;
     public bool isVideoAdActive = false;
+    public int targetFrameRate = 90;
 
 
     private void Awake()
     {
+        Application.targetFrameRate = targetFrameRate;
         instance = this;
     }
 
+
     void Update()
     {
+
         if (isVideoAdActive)
         {
             AdManager.instance.HideBannerAd();
@@ -41,22 +45,15 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Show Video Ad");
             AdManager.instance.ShowVideoAd();
             AdManager.instance.HideBannerAd();
             isVideoAdActive = true;
             timeRemainingVideo = 300;
         }
-
     }
 
     public void set2Dice()
     {
-       
-
-        //Debug.Log(videoAdTrigger);
-        //Debug.Log(videoAdTriggerCount);
-       
         if (videoAdTriggerCount == videoAdTrigger)
         {
             videoAdTriggerCount = 0;
@@ -66,7 +63,6 @@ public class GameManager : MonoBehaviour
         }
 
         videoAdTriggerCount++;
-
 
         if (diceNumber == 1)
         {
@@ -78,6 +74,5 @@ public class GameManager : MonoBehaviour
             diceNumber = 1;
             dice2.SetActive(false);
         }
-
     }
 }

@@ -4,37 +4,25 @@ using UnityEngine.Advertisements;
 
 public class AdManager : MonoBehaviour
 {
-
-
     public static AdManager instance;
 
-    private static readonly string playStoreID = "personal";
+    private static readonly string playStoreID = "3856609";
 
     private static readonly string videoAd = "video";
     private static readonly string bannerAd = "banner";
-
-    /*#if UNITY_EDITOR
-        private static bool testMode = true;
-    #else
-        private static bool testMode = false;
-    #endif*/
 
     private static bool testMode = true;
 
     private void Awake()
     {
-
         instance = this;
         InitializeAdvertisement();
-
     }
 
     private void InitializeAdvertisement()
     {
         Advertisement.Initialize(playStoreID, testMode);
     }
-
-
 
     public void ShowVideoAd()
     {

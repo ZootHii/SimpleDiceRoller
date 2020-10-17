@@ -6,123 +6,95 @@ using UnityEngine;
 public class Dice : MonoBehaviour
 {
 
-    public Rigidbody rb;
+    public Rigidbody diceRigidBody;
+
     public Vector3 diceVelocity;
+
+
     public static Dice instance;
-    public int count = 0;
-    private bool setpos = false;
-    private bool holding = false;
-    private float touchableArea = Screen.height / 2 * 1.7f;
 
-
+    private bool isPositionSet = false;
+    private bool isHolding = false;
+    private readonly float touchableArea = Screen.height / 2 * 1.7f;
     private float timeRemainingVideo = 40;
-
 
     private void Awake()
     {
         instance = this;
-
-    }
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
 
-
-        /*if (Input.GetMouseButtonDown(0))
-        {
-            UnityEngine.Debug.Log(Input.mousePosition);
-            UnityEngine.Debug.Log(Screen.height / 2 * 1.76f);
-        }*/
-
-        if (diceVelocity != null)
-        {
-            diceVelocity = rb.velocity;
-        }
+        diceVelocity = diceRigidBody.velocity;
 
 
         var fingerCount = 0;
         foreach (var touch in Input.touches)
         {
-
             if (touch.position.y < touchableArea)
             {
-
                 if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
                 {
                     fingerCount++;
-                    holding = false;
+                    isHolding = false;
                 }
-
 
                 if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
                 {
-                    holding = true;
+                    isHolding = true;
                     if (timeRemainingVideo > 0)
                     {
                         timeRemainingVideo -= Time.deltaTime;
-                        UnityEngine.Debug.Log("time : "+ timeRemainingVideo);
                     }
                     else
                     {
-                        //Debug.Log("Show Video Ad");
                         AdManager.instance.ShowVideoAd();
                         AdManager.instance.HideBannerAd();
                         GameManager.instance.isVideoAdActive = true;
-                        timeRemainingVideo = 30;
-                    }  
+                        timeRemainingVideo = 40;
+                    }
                 }
             }
-
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || (fingerCount > 0 && !holding))
+        if (Input.GetKeyDown(KeyCode.Space) || (fingerCount > 0 && !isHolding))
         {
-
-            //UnityEngine.Debug.Log("AHMET");
-            //UnityEngine.Debug.Log(GameManager.instance.diceNumber);
 
             float dirX = Random.Range(10000, 500000);
             float dirY = Random.Range(10000, 500000);
             float dirZ = Random.Range(10000, 500000);
             float posX = Random.Range(-2, 2);
-            float posZ = Random.Range(-8, 0);
             float posY = Random.Range(3, 6);
-
-
+            float posZ = -8;
+            
 
             transform.position = new Vector3(posX, posY, posZ);
             transform.Rotate(Vector3.down, 2000f * Time.deltaTime);
             transform.Rotate(Vector3.left, 2000f * Time.deltaTime);
-            //transform.rotation = Quaternion.identity;
-            rb.AddForce(Physics.gravity * 20f, ForceMode.Acceleration);
-            rb.AddTorque(dirX, dirY, dirZ);
+
+            diceRigidBody.AddForce(Physics.gravity * 5f, ForceMode.Acceleration);
+            diceRigidBody.AddForce(Vector3.forward * Time.deltaTime * 1000, ForceMode.VelocityChange); // atış hızı olarak 500 1000 2000 
+            diceRigidBody.AddTorque(dirX, dirY, dirZ, ForceMode.VelocityChange);
 
         }
-        else if (Input.GetKey(KeyCode.Space) || (fingerCount > 0 && holding))
+        else if (Input.GetKey(KeyCode.Space) || (fingerCount > 0 && isHolding))
         {
-            if (!setpos)
+            if (!isPositionSet)
             {
                 float posX = Random.Range(-2, 2);
-                float posZ = Random.Range(-8, 0);
                 float posY = Random.Range(3, 6);
+                float posZ = -8;
+                
                 transform.position = new Vector3(posX, posY, posZ);
-                setpos = true;
-
+                isPositionSet = true;
             }
-            else if (setpos)
+            else if (isPositionSet)
             {
                 transform.Rotate(Vector3.down, 1500f * Time.deltaTime);
                 transform.Rotate(Vector3.left, 1500f * Time.deltaTime);
             }
-
-            rb.AddForce(Physics.gravity, ForceMode.Acceleration);
         }
+        
     }
-
-    
 }

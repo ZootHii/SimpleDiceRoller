@@ -393,7 +393,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ade5960e604819546b8a7852fffbdfb0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.02
+      value: -1.931818
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ade5960e604819546b8a7852fffbdfb0,
         type: 3}
@@ -521,9 +521,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f80f1eb475d9449bca767c896d7882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 464683319}
+  diceRigidBody: {fileID: 464683319}
   diceVelocity: {x: 0, y: 0, z: 0}
   count: 0
+  isStart: 1
 --- !u!65 &464683318
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -563,37 +564,37 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ade5960e604819546b8a7852fffbdfb0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.1556034
+      value: 5.1555943
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ade5960e604819546b8a7852fffbdfb0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.861974
+      value: -1.8619902
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ade5960e604819546b8a7852fffbdfb0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.7610583
+      value: 2.760994
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ade5960e604819546b8a7852fffbdfb0,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.01745245
+      value: -0.017518641
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ade5960e604819546b8a7852fffbdfb0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.000004631818
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ade5960e604819546b8a7852fffbdfb0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.0000023436428
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ade5960e604819546b8a7852fffbdfb0,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99984777
+      value: 0.99984664
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ade5960e604819546b8a7852fffbdfb0,
         type: 3}
@@ -1719,9 +1720,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f80f1eb475d9449bca767c896d7882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1786853154}
+  diceRigidBody: {fileID: 1786853154}
   diceVelocity: {x: 0, y: 0, z: 0}
   count: 0
+  isStart: 1
 --- !u!1 &1841876455
 GameObject:
   m_ObjectHideFlags: 0
