@@ -1,26 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-    public static Dice instance;
+    public static Dice Instance;
     public Rigidbody diceRigidBody;
-    private bool isPositionSet = false;
-    private bool isHolding = false;
-    private readonly float touchableArea = Screen.height / 2 * 1.7f;
+    public Rigidbody dice2RigidBody;
+    private bool isPositionSet;
+    private bool isHolding;
+    private readonly float touchableArea = (Screen.height / 2f) * 1.7f;
     private float timeRemainingVideo = 40;
 
     private void Awake()
     {
-        instance = this;
-        diceRigidBody = GetComponent<Rigidbody>();
+        Instance = this;
     }
 
-    void Update()
+    private void Update()
     {
+        F();
+    }
 
+    private void F()
+    {
         var fingerCount = 0;
         foreach (var touch in Input.touches)
         {
@@ -41,34 +42,27 @@ public class Dice : MonoBehaviour
                     }
                     else
                     {
-                        AdManager.instance.ShowVideoAd();
-                        AdManager.instance.HideBannerAd();
-                        GameManager.instance.isVideoAdActive = true;
+                        AdManager.ShowVideoAd();
+                        AdManager.HideBannerAd();
+                        GameManager.Instance.isVideoAdActive = true;
                         timeRemainingVideo = 40;
                     }
                 }
             }
         }
-
+        
         if (Input.GetKeyDown(KeyCode.Space) || (fingerCount > 0 && !isHolding))
         {
-
-            float dirX = Random.Range(10000, 500000);
-            float dirY = Random.Range(10000, 500000);
-            float dirZ = Random.Range(10000, 500000);
             float posX = Random.Range(-2, 2);
             float posY = Random.Range(3, 6);
-            float posZ = -8;
-            
+            const float posZ = -8;
 
             transform.position = new Vector3(posX, posY, posZ);
-            transform.Rotate(Vector3.down, 2000f * Time.deltaTime);
-            transform.Rotate(Vector3.left, 2000f * Time.deltaTime);
+            transform.Rotate(Vector3.down * Time.deltaTime);
+            transform.Rotate(Vector3.left * Time.deltaTime);
 
             diceRigidBody.AddForce(Physics.gravity * 5f, ForceMode.Acceleration);
-            diceRigidBody.AddForce(Vector3.forward * Time.deltaTime * 1000, ForceMode.VelocityChange); // atış hızı olarak 500 1000 2000 
-            diceRigidBody.AddTorque(dirX, dirY, dirZ, ForceMode.VelocityChange);
-
+            diceRigidBody.AddForce(Vector3.forward * (Time.deltaTime * 650), ForceMode.VelocityChange);
         }
         else if (Input.GetKey(KeyCode.Space) || (fingerCount > 0 && isHolding))
         {
@@ -76,8 +70,8 @@ public class Dice : MonoBehaviour
             {
                 float posX = Random.Range(-2, 2);
                 float posY = Random.Range(3, 6);
-                float posZ = -8;
-                
+                const float posZ = -8;
+
                 transform.position = new Vector3(posX, posY, posZ);
                 isPositionSet = true;
             }
@@ -87,6 +81,5 @@ public class Dice : MonoBehaviour
                 transform.Rotate(Vector3.left, 1500f * Time.deltaTime);
             }
         }
-        
     }
 }

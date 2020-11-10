@@ -4,45 +4,43 @@ using UnityEngine;
 
 public class Result : MonoBehaviour
 {
-    TextMeshPro textMeshPro;
-    public static string dice1Result;
-    public static string dice2Result;
+    private TextMeshPro textMeshPro;
+    public static string Dice1Result;
+    public static string Dice2Result;
 
-    void Start()
+    private void Start()
     {
         textMeshPro = GetComponent<TextMeshPro>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (GameManager.instance.diceNumber == 1)
+        if (Time.frameCount % 7 == 0)
         {
-            if (dice1Result.ToString() == "")
+            switch (GameManager.DiceNumber)
             {
-                textMeshPro.text = "";
-            }
+                case 1:
+                {
+                    if (Dice1Result == "")
+                    {
+                        textMeshPro.text = "";
+                    }
 
-            textMeshPro.text = dice1Result.ToString();
-        }
-        else if (GameManager.instance.diceNumber == 2)
-        {
-            if (dice1Result.ToString() == "" && dice2Result.ToString() == "")
-            {
-                textMeshPro.text = "";
-            }
-            else
-            {
-                if(dice1Result.ToString() == "" || dice2Result.ToString() == "")
-                {
+                    textMeshPro.text = Dice1Result;
+                    break;
+                }
+                case 2 when Dice1Result == "" && Dice2Result == "":
+                case 2 when Dice1Result == "" || Dice2Result == "":
                     textMeshPro.text = "";
-                } 
-                else
+                    break;
+                case 2:
                 {
-                    int result1 = Int32.Parse(dice1Result.ToString());
-                    int result2 = Int32.Parse(dice2Result.ToString());
-                    int result = result1 + result2;
+                    var result1 = int.Parse(Dice1Result);
+                    var result2 = int.Parse(Dice2Result);
+                    var result = result1 + result2;
                     textMeshPro.text = result.ToString();
-                }                
+                    break;
+                }
             }
         }
     }

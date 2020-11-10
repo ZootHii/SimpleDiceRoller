@@ -4,14 +4,14 @@ using UnityEngine.Advertisements;
 
 public class AdManager : MonoBehaviour
 {
-    public static AdManager instance;
+    private static AdManager instance;
 
-    private static readonly string playStoreID = "3856609";
+    private const string PlayStoreId = "YOUR ID";
 
-    private static readonly string videoAd = "video";
-    private static readonly string bannerAd = "banner";
+    private const string VideoAd = "video";
+    private const string BannerAd = "banner";
 
-    private static bool testMode = true;
+    private const bool TestMode = true;
 
     private void Awake()
     {
@@ -19,37 +19,37 @@ public class AdManager : MonoBehaviour
         InitializeAdvertisement();
     }
 
-    private void InitializeAdvertisement()
+    private static void InitializeAdvertisement()
     {
-        Advertisement.Initialize(playStoreID, testMode);
+        Advertisement.Initialize(PlayStoreId, TestMode);
     }
 
-    public void ShowVideoAd()
+    public static void ShowVideoAd()
     {
-        if (Advertisement.IsReady(videoAd))
+        if (Advertisement.IsReady(VideoAd))
         {
-            Advertisement.Show(videoAd);
+            Advertisement.Show(VideoAd);
         }
     }
 
-    public void ShowBannerAd()
+    public static void ShowBannerAd()
     {
         instance.StartCoroutine(ShowBannerWhenReady());
     }
 
-    public void HideBannerAd()
+    public static void HideBannerAd()
     {
         Advertisement.Banner.Hide();
     }
 
     private static IEnumerator ShowBannerWhenReady()
     {
-        while (!Advertisement.IsReady(bannerAd))
+        while (!Advertisement.IsReady(BannerAd))
         {
             yield return new WaitForSeconds(0.5f);
         }
         
         Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
-        Advertisement.Banner.Show(bannerAd);
+        Advertisement.Banner.Show(BannerAd);
     }
 }

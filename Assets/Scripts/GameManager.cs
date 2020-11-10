@@ -2,30 +2,33 @@
 
 public class GameManager : MonoBehaviour
 {
-    public int diceNumber = 1;
+    public static int DiceNumber = 1;
     public GameObject dice2;
-    public static GameManager instance;
-    private int videoAdTrigger = 6;
-    private int videoAdTriggerCount = 0;
-    private float timeRemainingVideo = 300;
+    public static GameManager Instance;
+    private const int VideoAdTrigger = 6;
+    private int videoAdTriggerCount;
+    private float timeRemainingVideo = 120;
     private float timeRemainingBanner = 5;
-    public bool isVideoAdActive = false;
-    public int targetFrameRate = 90;
+    public bool isVideoAdActive;
+    public int targetFrameRate = 60;
 
 
     private void Awake()
     {
         Application.targetFrameRate = targetFrameRate;
-        instance = this;
+        Instance = this;
+    }
+    
+    private void FixedUpdate()
+    {
+        AdStuff();
     }
 
-
-    void Update()
+    private void AdStuff()
     {
-
         if (isVideoAdActive)
         {
-            AdManager.instance.HideBannerAd();
+            AdManager.HideBannerAd();
             timeRemainingBanner -= Time.deltaTime;
 
             if (timeRemainingBanner > 0)
@@ -36,43 +39,44 @@ public class GameManager : MonoBehaviour
         }
         else if (!isVideoAdActive)
         {
-            AdManager.instance.ShowBannerAd();
+            AdManager.ShowBannerAd();
         }
 
         if (timeRemainingVideo > 0)
         {
             timeRemainingVideo -= Time.deltaTime;
         }
-        else
+        else if(!isVideoAdActive)
         {
-            AdManager.instance.ShowVideoAd();
-            AdManager.instance.HideBannerAd();
+            AdManager.ShowVideoAd();
+            AdManager.HideBannerAd();
             isVideoAdActive = true;
-            timeRemainingVideo = 300;
+            timeRemainingVideo = 120;
         }
     }
-
+    
     public void Set2Dice()
     {
-        if (videoAdTriggerCount == videoAdTrigger)
+        if (videoAdTriggerCount == VideoAdTrigger && !isVideoAdActive)
         {
             videoAdTriggerCount = 0;
             isVideoAdActive = true;
-            AdManager.instance.ShowVideoAd();
-            AdManager.instance.HideBannerAd();
+            AdManager.ShowVideoAd();
+            AdManager.HideBannerAd();
         }
 
         videoAdTriggerCount++;
 
-        if (diceNumber == 1)
+        switch (DiceNumber)
         {
-            diceNumber = 2;
-            dice2.SetActive(true);
-        }
-        else
-        {
-            diceNumber = 1;
-            dice2.SetActive(false);
+            case 1:
+                DiceNumber = 2;
+                dice2.SetActive(true);
+                break;
+            case 2:
+                DiceNumber = 1;
+                dice2.SetActive(false);
+                break;
         }
     }
 }
