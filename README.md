@@ -12,7 +12,7 @@
  </p>
  
  <p align="center">
-  https://play.google.com/store/apps/details?id=com.ZootHii.SimpleDiceRoller
+  * [Google Play Store Link](https://play.google.com/store/apps/details?id=com.ZootHii.SimpleDiceRoller)
  </p>
  
  
